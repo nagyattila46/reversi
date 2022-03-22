@@ -11,7 +11,7 @@ let turn=true  //igaz-kék hamis-piros
 let N=8;
 var BLUE_PIECE="blue-piece";
 var RED_PIECE="red-piece";
-var NO_PIECE="noPieceHere"
+var NO_PIECE="noPieceHere";
 var selectedPiece=-1
 
 
@@ -44,7 +44,7 @@ function placeTile(){
             
             switchColor();
             checkWinner();
-            console.log(noPiecesCount);
+            
             
         }
         else{
@@ -55,7 +55,7 @@ function placeTile(){
             
             switchColor();
             checkWinner();
-            console.log(noPiecesCount);
+            
             
 
         }
@@ -130,28 +130,48 @@ function switchColor(){
     var utolsoSajat=null;
 
     //jobbra néz
-        for(i=N-sorbanHanyadik;i>0;i--){
-            if(cells[kivalasztott+i].className!=currentPlayer && cells[kivalasztott+i].className!=NO_PIECE){
-                utolsoEllenfel=kivalasztott+i;
+    {for(i=1;i<=N-sorbanHanyadik;i++){
+        //console.log(i)
+        console.log(kivalasztott+i);
+        console.log(cells[kivalasztott+i].className)
+        //console.log(sorbanHanyadik)
+        if(cells[kivalasztott+i].className==NO_PIECE){
+            console.log("break")
+            break;
+        }
+        
+        if(cells[kivalasztott+i].className!=currentPlayer && cells[kivalasztott+i].className!=NO_PIECE){
+            utolsoEllenfel=kivalasztott+i;
+        }
+        if(cells[kivalasztott+i].className==currentPlayer){
+            utolsoSajat=kivalasztott+i;
             }
-            if(cells[kivalasztott+i].className==currentPlayer){
-                utolsoSajat=kivalasztott+i;
-                }
-            }
-            var e=parseInt(utolsoEllenfel);
-            var s=parseInt(utolsoSajat);
-            for(let j=e;j<=s;j++){
-                cells[j].setAttribute("class",currentPlayer);
-            }
+        
+        var e=parseInt(utolsoEllenfel);
+        var s=parseInt(utolsoSajat);
+        for(let j=e;j<=s;j++){
+            cells[j].setAttribute("class",currentPlayer);
+        }}
+        
 
     //balra néz
-        for(i=sorbanHanyadik-1;i>0;i--){
+        for(i=1;i<sorbanHanyadik;i++){
+            //console.log(i)
+           // console.log(kivalasztott-i)
+
+            if(cells[kivalasztott-i].className==NO_PIECE){
+                //console.log("break")
+                break;
+            }
+            
             if(cells[kivalasztott-i].className!=currentPlayer && cells[kivalasztott-i].className!=NO_PIECE){
                 utolsoEllenfel=kivalasztott-i;
             }
             if(cells[kivalasztott-i].className==currentPlayer){
                 utolsoSajat=kivalasztott-i;
                 }
+            
+            //console.log("Utolso sajat lefele: "+utolsoSajat+"Utolso ellenfel lefele: "+utolsoEllenfel)
             }
             var e=parseInt(utolsoEllenfel);
             var s=parseInt(utolsoSajat);
@@ -160,13 +180,25 @@ function switchColor(){
             }
 
     //felfele néz
-        for(i=0;i<hanyadikSor;i++){
+        for(i=1;i<hanyadikSor;i++){
+            //console.log(i)
+            //console.log(kivalasztott-(i*N));
+            //console.log(cells[kivalasztott-(i*N)].className);
+            
+
+            if(cells[kivalasztott-(i*N)].className==NO_PIECE){
+                //console.log("break")
+                break;
+            }
+            
             if(cells[kivalasztott-(i*N)].className!=currentPlayer && cells[kivalasztott-(i*N)].className!=NO_PIECE){
                 utolsoEllenfel=kivalasztott-(i*N);
             }
             if(cells[kivalasztott-(i*N)].className==currentPlayer){
                 utolsoSajat=kivalasztott-(i*N);
                 }
+            
+            //console.log("Utolso sajat lefele: "+utolsoSajat+"Utolso ellenfel lefele: "+utolsoEllenfel)
             }
 
             var e=parseInt(utolsoEllenfel);
@@ -176,18 +208,23 @@ function switchColor(){
             }
     
 
-
+            
     //lefele néz
-        for(i=N-hanyadikSor;i>0;i--){
-            //console.log(kivalasztott+(i*N))
-            //console.log(i)
+        for(i=1;i<=N-hanyadikSor;i++){
+
+            if(cells[kivalasztott+(i*N)].className==NO_PIECE){
+                //console.log("break");
+                break;
+            }
+            
             if(cells[kivalasztott+(i*N)].className!=currentPlayer && cells[kivalasztott+(i*N)].className!=NO_PIECE){
                 utolsoEllenfel=kivalasztott+(i*N);
             }
             if(cells[kivalasztott+(i*N)].className==currentPlayer){
                 utolsoSajat=kivalasztott+(i*N);
                 }
-            //console.log("Utolso sajat: "+utolsoSajat+"Utolso ellenfel: "+utolsoEllenfel)
+            
+            //console.log("Utolso sajat lefele: "+utolsoSajat+"Utolso ellenfel lefele: "+utolsoEllenfel)
             }
 
             var e=parseInt(utolsoEllenfel);
@@ -203,9 +240,4 @@ function switchColor(){
     
      
 }
-
-
-
-
-
-
+}
