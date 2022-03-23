@@ -15,6 +15,7 @@ import java.lang.management.PlatformLoggingMXBean;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/rest")
 public class ReversiController {
 
     private ReversiService reversiService;
