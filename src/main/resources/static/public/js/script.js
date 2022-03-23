@@ -264,11 +264,16 @@ function switchColor(){
         //jobbra fel
         
         for(i=1;i<=N-sorbanHanyadik;i++){
-            console.log((kivalasztott+i)-(i*N))
+            //console.log((kivalasztott+i)-(i*N))
             //console.log(i)
             
+            
+            if(hanyadikSor==1){
+                break;
+            }
+
             if(cells[(kivalasztott+i)-(i*N)].className==NO_PIECE){
-                console.log("break jobbra fel")
+                //console.log("break jobbra fel")
                 break;
             }
             
@@ -280,13 +285,13 @@ function switchColor(){
                 }
                 
              }
-             console.log("Utolso sajat jobbra fel: "+utolsoSajat+"Utolso ellenfel jobbra fel: "+utolsoEllenfel);
+             //console.log("Utolso sajat jobbra fel: "+utolsoSajat+"Utolso ellenfel jobbra fel: "+utolsoEllenfel);
             var e=parseInt(utolsoEllenfel);
             var s=parseInt(utolsoSajat);
             
             if(utolsoEllenfel!=null && utolsoSajat!=null){
             for(let j=kivalasztott;j>=s;j-=(N-1)){
-                console.log(j);
+                
                 cells[j].setAttribute("class",currentPlayer);
                 }
             
@@ -294,5 +299,119 @@ function switchColor(){
             s=null;
    
             }
+
+            //jobbra le
+
+            for(i=1;i<=N-sorbanHanyadik;i++){
+                //console.log((kivalasztott+i)+(i*N))
+                //console.log(i)
+                
+                if(hanyadikSor==N){
+                    break;
+                }
+
+                
+                if(cells[(kivalasztott+i)+(i*N)].className==NO_PIECE){
+                    //console.log("break jobbra le")
+                    break;
+                }
+                
+                if(cells[(kivalasztott+i)+(i*N)].className!=currentPlayer && cells[(kivalasztott+i)+(i*N)].className!=NO_PIECE){
+                    utolsoEllenfel=(kivalasztott+i)+(i*N);
+                }
+                if(cells[(kivalasztott+i)+(i*N)].className==currentPlayer){
+                    utolsoSajat=(kivalasztott+i)+(i*N);
+                    }
+                    
+                 }
+                 //console.log("Utolso sajat jobbra le: "+utolsoSajat+"Utolso ellenfel jobbra le: "+utolsoEllenfel);
+                var e=parseInt(utolsoEllenfel);
+                var s=parseInt(utolsoSajat);
+                
+                if(utolsoEllenfel!=null && utolsoSajat!=null){
+                for(let j=kivalasztott;j<=s;j+=(N+1)){
+                    
+                    cells[j].setAttribute("class",currentPlayer);
+                    }
+                
+                e=null;
+                s=null;
+       
+                }
+
+
+        //balra fel
+
+    
+        for(i=1;i<sorbanHanyadik;i++){
+           
+           if(hanyadikSor==1){
+               break;
+           }
+            
+            if(cells[kivalasztott-i].className==NO_PIECE){
+                //console.log("break balra fel")
+                break;
+            }
+            
+            if(cells[(kivalasztott-i)-(i*N)].className!=currentPlayer && cells[(kivalasztott-i)-(i*N)].className!=NO_PIECE){
+                utolsoEllenfel=(kivalasztott-i)-(i*N);
+            }
+            if(cells[(kivalasztott-i)-(i*N)].className==currentPlayer){
+                utolsoSajat=(kivalasztott-i)-(i*N);
+                }
+            
+            
+            }
+           // console.log("Utolso sajat balra fel: "+utolsoSajat+"Utolso ellenfel balra fel: "+utolsoEllenfel);
+            var e=parseInt(utolsoEllenfel);
+            var s=parseInt(utolsoSajat);
+
+            if(utolsoEllenfel!=null && utolsoSajat!=null){
+                for(let j=kivalasztott;j>=s;j-=(N+1)){
+                    
+                    cells[j].setAttribute("class",currentPlayer);
+                    }
+                
+                e=null;
+                s=null;
+            }
+
+        //balra le
+        for(i=1;i<=N-hanyadikSor;i++){
+            //console.log((kivalasztott-i)+(i*N))
+            
+            if(hanyadikSor==1){
+                break;
+            }
+             
+             if(cells[kivalasztott-i].className==NO_PIECE){
+                 //console.log("break balra le")
+                 break;
+             }
+             
+             if(cells[(kivalasztott-i)+(i*N)].className!=currentPlayer && cells[(kivalasztott-i)+(i*N)].className!=NO_PIECE){
+                 utolsoEllenfel=(kivalasztott-i)+(i*N);
+             }
+             if(cells[(kivalasztott-i)+(i*N)].className==currentPlayer){
+                 utolsoSajat=(kivalasztott-i)+(i*N);
+                 }
+             
+             
+             }
+             console.log("Utolso sajat balra le: "+utolsoSajat+"Utolso ellenfel balra le: "+utolsoEllenfel);
+             var e=parseInt(utolsoEllenfel);
+             var s=parseInt(utolsoSajat);
+            
+             //if(utolsoEllenfel!=null && utolsoSajat!=null){
+                 for(let j=kivalasztott;j<=s;j+=(N-1)){
+                     console.log(j);
+                     cells[j].setAttribute("class",currentPlayer);
+                     }
+                 
+                 e=null;
+                 s=null;
+             //}
+                
         
 }
