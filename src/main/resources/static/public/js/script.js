@@ -1,8 +1,8 @@
 let cells=document.querySelectorAll("td");
 let redsPieces = document.querySelectorAll("red-piece");
 let bluesPieces = document.querySelectorAll("blue-piece")
-const redTurnText = document.querySelectorAll(".red-turn-text");
-const blueTurntext = document.querySelectorAll(".blue-turn-text");
+const redTurnText = document.getElementById("pirosSzoveg");
+const blueTurntext = document.getElementById("kekSzoveg");
 const divider = document.querySelector("#divider")
 let noPiecesCount=60
 let redsCount=0;
@@ -37,28 +37,37 @@ function placeTile(){
     
     
         if(turn){
-            deletePossibleMoves();
+
+            
             this.setAttribute("class","blue-piece");
+            deletePossibleMoves();
             selectedPiece=this.id;
             cells[selectedPiece].removeEventListener("click",placeTile);
             noPiecesCount--;
             switchColor();
             checkWinner();
-            possibleMoves();
+            
+            blueTurntext.setAttribute("class","no-turn-text");
+            redTurnText.setAttribute("class","red-turn-text");
+            
            
         }
         else{
-            deletePossibleMoves();
+            
             this.setAttribute("class","red-piece");
+            deletePossibleMoves();
             selectedPiece=this.id;
             cells[selectedPiece].removeEventListener("click",placeTile);
             noPiecesCount--;
             switchColor();
             checkWinner();
-            possibleMoves();
             
+            redTurnText.setAttribute("class","no-turn-text");
+            blueTurntext.setAttribute("class","blue-turn-text");
+
         }
-        turn=!turn    
+        turn=!turn
+        possibleMoves();    
 }
 
 function isPossibleMove(x){
@@ -87,9 +96,13 @@ function isPossibleMove(x){
             break;
         }
 
-        if(cells[x+j].className==enemyPlayer){
-            if(cells[x+(j+1)].className==currentPlayer){
-                return true;
+        if(cells[x].className==NO_PIECE){
+            if(cells[x+j].className==enemyPlayer){
+                if(cells[x+(j+1)].className==currentPlayer){
+                    
+                    return true;
+                }
+                
             }
         }
        
@@ -106,12 +119,15 @@ function isPossibleMove(x){
             break;
         }   
 
-        if(cells[x-j].className==enemyPlayer){
-            if(cells[x-(j+1)].className==currentPlayer){
-                return true;
-                
+        if(cells[x].className==NO_PIECE){
+            if(cells[x-j].className==enemyPlayer){
+                if(cells[x-(j+1)].className==currentPlayer){
+                    return true;
+                    
+                }
             }
         }
+        
        
     }
 
@@ -131,14 +147,17 @@ function isPossibleMove(x){
             break;
         }   
         
-        if(cells[x-(j*N)].className==enemyPlayer){
+        if(cells[x].className==NO_PIECE){
+            if(cells[x-(j*N)].className==enemyPlayer){
             
-            //console.log(x-(j*N))
-            if(cells[x-((j+1)*N)].className==currentPlayer){
-                return true;
-                
+                //console.log(x-(j*N))
+                if(cells[x-((j+1)*N)].className==currentPlayer){
+                    return true;
+                    
+                }
             }
         }
+        
 
     }
 
@@ -153,20 +172,88 @@ function isPossibleMove(x){
         if(cells[x+N].className!=enemyPlayer){
             break;
         }   
-        
-        if(cells[x+(j*N)].className==enemyPlayer){
+
+        if(cells[x].className==NO_PIECE){
+            if(cells[x+(j*N)].className==enemyPlayer){
             
-            if(cells[x+(j+1)*N].className==currentPlayer){
-                //console.log(x+(j+1)*N)
-                return true;
+                if(cells[x+(j+1)*N].className==currentPlayer){
+                    //console.log(x+(j+1)*N)
+                    return true;
+                    
+                }
+            }
+    
+        }
+        
+        
+    }
+
+    var meddig;
+    if(hanyadikSor<sorbanHanyadik){
+        meddig=hanyadikSor;
+    }
+    if(sorbanHanyadik<hanyadikSor){
+        meddig=sorbanHanyadik;
+    }
+    
+    //jobb fel
+
+    for(j=1;j<meddig;j++){
+        //console.log("x:"+x)
+        //console.log("hanyadiksor:"+hanyadikSor);
+        //console.log(x-(j*(N-1)))
+        if(sorbanHanyadik>=N-1){
+            break;
+        }
+        if(hanyadikSor<=2){
+            break;
+        }
+        if(cells[x-(N-1)].className!=enemyPlayer){
+            break;
+        }
+
+        if(cells[x].className==NO_PIECE){
+            if(cells[x-(j*(N-1))].className==enemyPlayer){
+                
+                if(cells[x-((j+1)*(N-1))].className==currentPlayer){
+                    
+                    return true;
+                }
                 
             }
         }
-
+       
     }
-    
 
-    
+    //jobb le
+
+    for(j=1;j<meddig;j++){
+        console.log("x:"+x)
+        //console.log("hanyadiksor:"+hanyadikSor);
+        //console.log(x-(j*(N-1)))
+        if(sorbanHanyadik>=N-1){
+            break;
+        }
+        if(hanyadikSor<=N-1){
+            break;
+        }
+        if(cells[x+(N+1)].className!=enemyPlayer){
+            break;
+        }
+
+        if(cells[x].className==NO_PIECE){
+            if(cells[x+(j*(N+1))].className==enemyPlayer){
+                
+                
+                if(cells[x+((j+1)*(N+1))].className==currentPlayer){
+                    
+                    return true;
+                }
+                
+            }
+        }
+       
+    }
     
 
 }
@@ -582,4 +669,20 @@ function switchColor(){
              }
                 
         
+}
+
+function resetTable(){
+    for(let i=0;i<cells.length;i++){
+        cells[i].setAttribute("class",NO_PIECE);
+    }
+    cells[27].setAttribute("class",BLUE_PIECE);
+    cells[36].setAttribute("class",BLUE_PIECE);
+    cells[28].setAttribute("class",RED_PIECE);
+    cells[35].setAttribute("class",RED_PIECE);
+    turn=true;
+    possibleMoves();
+    redTurnText.setAttribute("class","no-turn-text");
+    blueTurntext.setAttribute("class","blue-turn-text");
+    addClickListener();
+    
 }

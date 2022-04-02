@@ -1,4 +1,4 @@
-const button=document.getElementById("button")
+const button=document.getElementById("button-save")
 
 const sendHttpRequest=(method,url,data)=>{
     return fetch(url,{
