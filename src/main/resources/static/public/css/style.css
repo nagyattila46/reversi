@@ -1,5 +1,6 @@
 * {
     margin: auto;
+    
 }
 
 main {
@@ -17,24 +18,27 @@ div {
 
 
 .noPieceHere {
-    background-color: #F0D2B4;
+    background-color: rgba(242,242,242,255);
 }
 
 td {
     text-align: center;
-    background-color: #F0D2B4;
+    background-color: rgba(242,242,242,255);
     width: 65px;
     height: 65px;
+    padding: 10px;
 }
 
 table{
     margin-top: 1vh;
     width: 100%;
-  height: 100vh;
-  display: contents;
+    height: 100vh;
+  display: flex;
   justify-content: center;
   align-items: center;
-  
+  border-spacing: 5px;
+  border-collapse: separate;
+
 }
 
 .red-turn-text {
@@ -76,11 +80,11 @@ table{
 }
 
 .possible-move {
-    width: 20px;
-    height: 20px;
-    padding: 12px;
-    background: green;
-    border-radius: 50px;
+    background:transparent;
+    border-radius: 50%;
+	  height: 20px;
+	  width: 20px;
+	  border: 2px solid blue;
 }
 
 .no-turn-text{

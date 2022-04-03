@@ -81,7 +81,7 @@ function isPossibleMove(x){
         enemyPlayer=BLUE_PIECE;
     }
 
-    var sorbanHanyadik=parseInt(getRowNumber(cells[x].id));
+    var sorbanHanyadik=parseInt(getRowPosition(cells[x].id));
     var hanyadikSor=parseInt(getRowNumber(cells[x].id));
     let vanAtfedes=false;
     let j=0;
@@ -98,6 +98,11 @@ function isPossibleMove(x){
 
         if(cells[x].className==NO_PIECE){
             if(cells[x+j].className==enemyPlayer){
+
+                if(getRowPosition(x+j)==N){
+                    break;
+                }
+
                 if(cells[x+(j+1)].className==currentPlayer){
                     
                     return true;
@@ -121,6 +126,10 @@ function isPossibleMove(x){
 
         if(cells[x].className==NO_PIECE){
             if(cells[x-j].className==enemyPlayer){
+
+                if(getRowPosition(x-j)==1){
+                    break;
+                }
                 if(cells[x-(j+1)].className==currentPlayer){
                     return true;
                     
@@ -148,9 +157,13 @@ function isPossibleMove(x){
         }   
         
         if(cells[x].className==NO_PIECE){
+          
             if(cells[x-(j*N)].className==enemyPlayer){
+
+                if(getRowNumber(x-(j*N))==1){
+                    break;
+                }
             
-                //console.log(x-(j*N))
                 if(cells[x-((j+1)*N)].className==currentPlayer){
                     return true;
                     
@@ -175,6 +188,10 @@ function isPossibleMove(x){
 
         if(cells[x].className==NO_PIECE){
             if(cells[x+(j*N)].className==enemyPlayer){
+
+                if(getRowNumber(cells[x+(j*N)])==N){
+                    break;
+                }
             
                 if(cells[x+(j+1)*N].className==currentPlayer){
                     //console.log(x+(j+1)*N)
@@ -214,6 +231,12 @@ function isPossibleMove(x){
 
         if(cells[x].className==NO_PIECE){
             if(cells[x-(j*(N-1))].className==enemyPlayer){
+
+                /*
+                if(getRowNumber(x-(j*(N-1)))==1){
+                    console.log("break");
+                    break;
+                }*/
                 
                 if(cells[x-((j+1)*(N-1))].className==currentPlayer){
                     
@@ -228,13 +251,11 @@ function isPossibleMove(x){
     //jobb le
 
     for(j=1;j<meddig;j++){
-        console.log("x:"+x)
-        //console.log("hanyadiksor:"+hanyadikSor);
-        //console.log(x-(j*(N-1)))
+        
         if(sorbanHanyadik>=N-1){
             break;
         }
-        if(hanyadikSor<=N-1){
+        if(hanyadikSor>=N-1){
             break;
         }
         if(cells[x+(N+1)].className!=enemyPlayer){
@@ -246,7 +267,69 @@ function isPossibleMove(x){
                 
                 
                 if(cells[x+((j+1)*(N+1))].className==currentPlayer){
-                    
+                    return true;
+                }
+                
+            }
+        }
+       
+    }
+
+    //bal fel
+
+    for(j=1;j<meddig;j++){
+        
+        if(sorbanHanyadik>=2){
+            break;
+        }
+        if(hanyadikSor<=2){
+            break;
+        }
+        if(cells[x-(N+1)].className!=enemyPlayer){
+            break;
+        }
+
+        if(cells[x].className==NO_PIECE){
+            if(cells[x-(j*(N+1))].className==enemyPlayer){
+
+                if(getRowNumber(x-(j*(N+1)))==1 || getRowPosition(x-(j*(N+1)))==1){
+                    break;
+                }
+
+                
+                if(cells[x-((j+1)*(N+1))].className==currentPlayer){
+                    console.log("bal fel");
+                    return true;
+                }
+                
+            }
+        }
+       
+    }
+
+    //bal le
+
+    for(j=1;j<meddig;j++){
+        
+        if(sorbanHanyadik>=N-1){
+            break;
+        }
+        if(hanyadikSor>=N-1){
+            break;
+        }
+        if(cells[x+(N-1)].className!=enemyPlayer){
+            break;
+        }
+
+        if(cells[x].className==NO_PIECE){
+            if(cells[x+(j*(N-1))].className==enemyPlayer){
+                
+                if(getRowNumber(x-(j*(N-1)))==1 || getRowPosition(x-(j*(N-1)))==1){
+                    break;
+                }
+                
+                if(cells[x+((j+1)*(N-1))].className==currentPlayer){
+                    console.log("bal le")
                     return true;
                 }
                 
