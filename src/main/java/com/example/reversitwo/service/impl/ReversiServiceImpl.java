@@ -8,6 +8,7 @@ import com.example.reversitwo.service.ReversiService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -27,7 +28,9 @@ public class ReversiServiceImpl implements ReversiService {
 
     @Override
     public BoardDTO createGame(BoardDTO boardDTO) {
+
         Board boardToSave=modelMapper.map(boardDTO,Board.class);
+        boardToSave.setID(null);
         Board savedBoard=gameRepository.save(boardToSave);
         return modelMapper.map(savedBoard, BoardDTO.class);
     }
@@ -63,5 +66,11 @@ public class ReversiServiceImpl implements ReversiService {
     public Optional<BoardDTO> findByID(Long ID) {
         Optional<Board>optionalBoard=gameRepository.findById(ID);
         return optionalBoard.map(board -> modelMapper.map(board,BoardDTO.class));
+    }
+
+    @Override
+    public List<Board> findAll() {
+        List<Board> optionalBoard=gameRepository.findAll();
+        return optionalBoard;
     }
 }

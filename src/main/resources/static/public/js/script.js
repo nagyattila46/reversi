@@ -1,6 +1,6 @@
-let cells=document.querySelectorAll("td");
-let redsPieces = document.querySelectorAll("red-piece");
-let bluesPieces = document.querySelectorAll("blue-piece")
+var cells=document.querySelectorAll("td");
+var redsPieces = document.querySelectorAll("red-piece");
+var bluesPieces = document.querySelectorAll("blue-piece")
 const redTurnText = document.getElementById("pirosSzoveg");
 const blueTurntext = document.getElementById("kekSzoveg");
 const divider = document.querySelector("#divider")
@@ -31,6 +31,22 @@ function addClickListener(){
     cells[28].removeEventListener("click",placeTile);
 }addClickListener();
 
+function setFrontendGraphics(){
+    addClickListener();
+    deletePossibleMoves();
+    possibleMoves();
+    
+    if(!turn){
+        blueTurntext.setAttribute("class","no-turn-text");
+        redTurnText.setAttribute("class","red-turn-text");
+    }
+    if(turn){
+        redTurnText.setAttribute("class","no-turn-text");
+        blueTurntext.setAttribute("class","blue-turn-text");
+    }
+    
+
+}
 
 
 function placeTile(){
@@ -298,7 +314,6 @@ function isPossibleMove(x){
 
                 
                 if(cells[x-((j+1)*(N+1))].className==currentPlayer){
-                    console.log("bal fel");
                     return true;
                 }
                 
@@ -329,7 +344,6 @@ function isPossibleMove(x){
                 }
                 
                 if(cells[x+((j+1)*(N-1))].className==currentPlayer){
-                    console.log("bal le")
                     return true;
                 }
                 

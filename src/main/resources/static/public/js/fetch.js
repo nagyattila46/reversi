@@ -1,4 +1,3 @@
-const button=document.getElementById("button-save")
 
 const sendHttpRequest=(method,url,data)=>{
     return fetch(url,{
@@ -11,10 +10,7 @@ const sendHttpRequest=(method,url,data)=>{
             return response.json().then(errResData=>{
                 const error=new Error('Something went wrong!');
                 error.data=errResData;
-                console.log(response.status);
-                console.log(response.statusText);
-                console.log(response.text);
-                console.log(response);
+                
                 throw error;
             })
         }
@@ -25,6 +21,7 @@ const sendHttpRequest=(method,url,data)=>{
 const getData=()=>{
     sendHttpRequest('GET','http://localhost:8080/board').then(responseData=>{
         console.log(responseData);
+        return responseData;
     })
 }
 
@@ -37,28 +34,28 @@ const sendData=()=>{
                 data.push(1);
             }else if(cells[(i*8)+j].className==RED_PIECE){
                 data.push(2);
-            }else if(cells[(i*8)+j].className==NO_PIECE){
+            }else if(cells[(i*8)+j].className==NO_PIECE || cells[(i*8)+j].className=="possible-move"){
                 data.push(0);
             } 
         }
         cellsNumbers.push(data);
         data=[];
     }
+    console.log("saveID:"+saveID);
 
-    sendHttpRequest('POST','http://localhost:8080/create',{
-        palya:this.cellsNumbers,
+    sendHttpRequest('POST','http://localhost:8080/rest/create',{
+        palya:cellsNumbers,
         szabadMezokSzama:noPiecesCount,    
         egyesekSzama:bluesCount,
         kettesekSzama:redsCount,
-        id:1,
+        id:saveID,
         n:8,
+        turn:turn
         }
     ).then(responseData=>{
-        console.log(responseData);
-        console.log("responseData");
+        console.log(responseData)
     }).catch(function(error){
         console.log("Hiba:"+error);
     })
     
 }
-button.addEventListener('click',sendData);

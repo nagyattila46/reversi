@@ -26,6 +26,15 @@ public class Board {
     private int szabadMezokSzama;
     private int egyesekSzama;
     private int kettesekSzama;
+    private boolean turn=true;
+
+    public boolean isTurn() {
+        return turn;
+    }
+
+    public void setTurn(boolean turn) {
+        this.turn = turn;
+    }
 
     public int getN() {
         return N;

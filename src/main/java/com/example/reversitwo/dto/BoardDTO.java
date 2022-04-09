@@ -25,6 +25,15 @@ public class BoardDTO {
     private int szabadMezokSzama;
     private int egyesekSzama=2;
     private int kettesekSzama=2;
+    private boolean turn=true;
+
+    public boolean isTurn() {
+        return turn;
+    }
+
+    public void setTurn(boolean turn) {
+        this.turn = turn;
+    }
 
     public int getN() {
         return N;
