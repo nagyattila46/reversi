@@ -4,17 +4,21 @@ var bluesPieces = document.querySelectorAll("blue-piece")
 const redTurnText = document.getElementById("pirosSzoveg");
 const blueTurntext = document.getElementById("kekSzoveg");
 const divider = document.querySelector("#divider")
+let blueScore=document.getElementById("blueScore");
+let redScore=document.getElementById("redScore");
 let noPiecesCount=60
-let redsCount=0;
-let bluesCount=0;
+let redsCount=2;
+let bluesCount=2;
 let turn=true  //igaz-kék hamis-piros
 let N=8;
 var BLUE_PIECE="blue-piece";
 var RED_PIECE="red-piece";
 var NO_PIECE="noPieceHere";
 var selectedPiece=-1
-
-
+/*
+blueScore.innerHTML=bluesCount;
+redScore.innerHTML=redsCount;
+*/
 
 //onclick event hozzáadása az összes mezőhöz
 function addClickListener(){
@@ -35,7 +39,8 @@ function setFrontendGraphics(){
     addClickListener();
     deletePossibleMoves();
     possibleMoves();
-    
+    blueScore.innerHTML=bluesCount;
+    redScore.innerHTML=redsCount;
     if(!turn){
         blueTurntext.setAttribute("class","no-turn-text");
         redTurnText.setAttribute("class","red-turn-text");

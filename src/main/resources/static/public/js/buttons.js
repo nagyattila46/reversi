@@ -6,7 +6,7 @@ const loadButton=document.getElementById('button-load');
 
 const saveButton=document.getElementById("button-save");
 //const saveInput=;
-let saveID=parseInt(document.getElementById("saveTablaID").value);
+let saveID;
 let loadID=parseInt(loadInput.value);
 
 

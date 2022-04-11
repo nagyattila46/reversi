@@ -10,7 +10,7 @@ import java.util.Locale;
 public class BoardDTO {
 
     private int N=8;
-    @Id
+
     private Long ID;
     private int[][] palya= {
             {0,0,0,0,0,0,0,0},

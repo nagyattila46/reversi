@@ -28,9 +28,8 @@ public class ReversiServiceImpl implements ReversiService {
 
     @Override
     public BoardDTO createGame(BoardDTO boardDTO) {
-
         Board boardToSave=modelMapper.map(boardDTO,Board.class);
-        boardToSave.setID(null);
+
         Board savedBoard=gameRepository.save(boardToSave);
         return modelMapper.map(savedBoard, BoardDTO.class);
     }

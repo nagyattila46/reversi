@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Játékszabályok</title>
+
+    <link rel="stylesheet" type="text/css" href="public/css/style.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="public/css/style.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <img src="../static/pictures/rev.jpg" id="bg" alt="">
+    
+    
+    <div class="navigationbar">
+        <nav class="navbar">
+          <li class="nav-item">
+            <div class="menu">
+              
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">Játék</a>
+          </li>
+          <li class="nav-item">
+            <a href="rules.html" class="nav-link">Játékszabályok</a>
+          </li>
+        </nav>
+    </div>
+
+    <pre>
+
+            <h1>A reversi szabályai</h1>
+
+        A reversi, az othello és a fordítgatós mellett még más neveken is ismert
+        játékot általában nyolcszor nyolc mezőből álló négyzetrácsos táblán
+        játsszák, amelyet nem szoktak a sakktáblához hasonlóan színezni. De
+        természetesen valódi sakktáblán is játszható, valamint kisebb vagy nagyobb
+        négyzetrácson is.
+
+        ########  A játék klasszikus alapállása szerint a két játékos két-két
+        ########  figurát helyez a tábla közepére a baloldalt látható elrendezésben,
+        ########  ahol o az egyik, O a másik játékos bábuja, # az üres mező. A
+        ###oO###  reversit legjobb olyan korongokkal játszani, amelyek két oldala
+        ###Oo###  különböző színű (hagyományosan piros és kék) - így a bábuk
+        ########  elvételekor megfordítjuk azokat, s a másik játékos színét fogják
+        ########  mutatni. De úgy is lehet, hogy a kétféle bábut cserélgetjük.
+        ########
+                A két játékos felváltva lép úgy, hogy lerak egy korongot
+                valamelyik üres mezőre. Csak olyan helyre rakhat, ahol meg tudja
+        fordítani az ellenfél legalább egy korongját; ez úgy lehetséges, hogy az
+        ellenfél korongja az éppen letett korong és a játékos másik korongja között
+        van, egyenes vonalban vízszintesen, függőlegesen vagy átlósan. Például ebben
+        #Oo  az elrendezésben a kis o-val játszó játékos az üres mezőre téve
+        megfordíthatja a nagy O-t, mivel az az éppen letett korong és a jobb szélen
+        levő saját korong között van: 1. #Oo  2. oOo  3. ooo
+
+        Több ellenséges korong is zsákmányolható egyenes vonalban: #OOOOOOo - ha a
+        bal szélre rakunk o-val, a hat O megfordul. Minden korongot meg lehet és
+        kell fordítani, ami az éppen letett és a már meglevő saját korongok között
+        áll, akár több irányban egyszerre:
+
+        #####o##8  Ha ebben az állásban a kis o-val játszó játékos a csillaggal
+        o#O#O###7  jelölt mezőre rak, az összes O bábu az övé lesz, kivéve az e4-en
+        #OOO####6  állót - mert nincs vele egyvonalban -, és a c6 és c7 mezőkön
+        oO*OOOOo5  levőket, mert nincs mögöttük, c8-on saját bábu.
+        #OOOO###4  A korongok megfordítása nem külön lépés, hanem lépésünk
+        o#O#Oo##3  következménye. A megfordított bábuk ettől kezdve a sajátjaink,
+        ##O##O##2  felhasználhatók az ellenfél megmaradt bábuinak beszorítására -
+        ##o###o#1  amíg vissza nem fordítják őket. A táblán levő korongokat levenni,
+        abcdefgh   mozgatni nem lehet.
+
+                Előfordul, hogy a soron levő játékos nem tud lépni, mint a
+        ########  baloldalt látható példában az o, mert nincs olyan üres mező,
+        ########  ahova rakva megfordíthatja ellenfele legalább egy korongját. Ez
+        ###ooooo  nem jelenti a játék végét. A lépni nem tudó játékos passzol, s
+        ###oOOOO  ellenfele lép. Akárhányszor lehet passzolni sorozatban is, ha az
+        ###ooOOO  ellenfélnek sikerül úgy megfordítgatni korongjainkat, hogy nekünk
+        ####ooOO  ne adjon lépéslehetőséget. A baloldali állásban például o passza
+        ######oO  után O legjobb lépése a *-gal jelölt mező, amivel egy bábut
+        ######*O  zsákmányolva újabb passzra kényszeríti o-t. Passzolni azonban csak
+                akkor szabad (és kell), ha nem tudunk lépni. Ha tudunk, akkor
+                lépnünk kell.
+
+        A játék a következő esetekben ér véget:
+
+        - ha betelt a tábla;
+        - ha az egyik játékosnak elfogytak a korongjai (hiszen a szabályos lépéshez
+        egy már táblán levő korong is kell);
+        - ha egyik játékos sem tud lépni.
+
+        Mindegyik esetben az győz, akinek több korongja van a táblán; ha egyenlő
+        számúak, az eredmény döntetlen.
+
+    </pre>
+
+</body>
+</html>

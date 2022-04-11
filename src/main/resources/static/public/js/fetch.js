@@ -1,3 +1,12 @@
+let successAlert=document.getElementById("alert-saved");
+
+var delay = ( function() {
+    var timer = 0;
+    return function(callback, ms) {
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+    };
+})();
 
 const sendHttpRequest=(method,url,data)=>{
     return fetch(url,{
@@ -26,6 +35,7 @@ const getData=()=>{
 }
 
 const sendData=()=>{
+    $('#alert-saved').show();
     let cellsNumbers=[];
     let data=[];
     for(let i=0;i<8;i++){
@@ -41,19 +51,29 @@ const sendData=()=>{
         cellsNumbers.push(data);
         data=[];
     }
-    console.log("saveID:"+saveID);
+    
 
     sendHttpRequest('POST','http://localhost:8080/rest/create',{
         palya:cellsNumbers,
         szabadMezokSzama:noPiecesCount,    
         egyesekSzama:bluesCount,
         kettesekSzama:redsCount,
-        id:saveID,
+        
         n:8,
         turn:turn
         }
     ).then(responseData=>{
         console.log(responseData)
+        saveID=responseData.id;
+        $('#alert-saved').show();
+        successAlert.innerHTML="Tábla mentve,ID:"+saveID;
+        delay(function(){
+            $('#alert-saved').alert('close'); 
+        },3000);
+        
+        
+       
+        
     }).catch(function(error){
         console.log("Hiba:"+error);
     })
