@@ -393,14 +393,15 @@ function checkWinner(){
     }
     if(noPiecesCount==0){
         if(redsCount>bluesCount){
-            alert("Red wins")
+            
             console.log("Red wins")
         }
         if(bluesCount>redsCount){
-            alert("Blue wins")
+           
             console.log("Blue wins")
         }
         if(redsCount==bluesCount){
+            
             console.log("Egyenlő")
         }
         
