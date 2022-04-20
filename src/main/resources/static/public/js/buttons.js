@@ -19,8 +19,6 @@ saveButton.addEventListener('click',sendData);
 
 function loadTable(){
     
-   
-    
     var url="http://localhost:8080/rest/"+loadID;
     fetch(url).then(function(response){
         return response.json();
@@ -37,6 +35,9 @@ function loadTable(){
                 if(data.palya[i][j]==0){
                     cells[i*N+j].setAttribute("class",NO_PIECE);
                 }
+                if(data.palya[i][j]==3){
+                    cells[i*N+j].setAttribute("class","disabled");
+                }
             }
                 possibleMoves();
                 bluesCount=data.egyesekSzama;
@@ -46,9 +47,8 @@ function loadTable(){
                 setFrontendGraphics();
             
         }
-        //console.log(data)
     }).catch(function(){
-        console.log("Hiba");
+        console.log("Hiba a betöltés közben");
     })
    
     

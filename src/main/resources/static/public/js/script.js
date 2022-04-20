@@ -15,6 +15,7 @@ var BLUE_PIECE="blue-piece";
 var RED_PIECE="red-piece";
 var NO_PIECE="noPieceHere";
 var selectedPiece=-1
+let startGameButton=document.getElementById("button-startgame");
 /*
 blueScore.innerHTML=bluesCount;
 redScore.innerHTML=redsCount;
@@ -22,18 +23,50 @@ redScore.innerHTML=redsCount;
 
 //onclick event hozzáadása az összes mezőhöz
 function addClickListener(){
+
     for(let i=0;i<cells.length;i++){
-        if(cells[i].className=="noPieceHere"){
+        if(cells[i].className=="possible-move"){
+            cells[i].removeEventListener("click",placeTile)
+        }
+    }
+
+    for(let i=0;i<cells.length;i++){
+        if(cells[i].className=="possible-move"){
             cells[i].addEventListener("click",placeTile)
-        selectedPiece=this.id
         }
         
     }
+    
     cells[35].removeEventListener("click",placeTile);
     cells[36].removeEventListener("click",placeTile);
     cells[27].removeEventListener("click",placeTile);
     cells[28].removeEventListener("click",placeTile);
-}addClickListener();
+}
+
+function chooseDisabledTiles(){
+    this.setAttribute("class","disabled");
+    this.removeEventListener("click",chooseDisabledTiles);
+}
+
+function addDisabledEventListeners(){
+    for(let i=0;i<cells.length;i++){
+        if(cells[i].className==NO_PIECE){
+            cells[i].addEventListener("click",chooseDisabledTiles)
+        }
+    }
+}addDisabledEventListeners();
+
+function startGame(){
+    for(let i=0;i<cells.length;i++){
+        
+        cells[i].removeEventListener("click",chooseDisabledTiles)
+    }
+    addClickListener();
+    possibleMoves();
+    
+}
+startGameButton.addEventListener("click",startGame)
+
 
 function setFrontendGraphics(){
     addClickListener();
@@ -59,7 +92,6 @@ function placeTile(){
     
         if(turn){
 
-            
             this.setAttribute("class","blue-piece");
             deletePossibleMoves();
             selectedPiece=this.id;
@@ -67,7 +99,6 @@ function placeTile(){
             noPiecesCount--;
             switchColor();
             checkWinner();
-            
             blueTurntext.setAttribute("class","no-turn-text");
             redTurnText.setAttribute("class","red-turn-text");
             
@@ -82,13 +113,13 @@ function placeTile(){
             noPiecesCount--;
             switchColor();
             checkWinner();
-            
             redTurnText.setAttribute("class","no-turn-text");
             blueTurntext.setAttribute("class","blue-turn-text");
 
         }
         turn=!turn
-        possibleMoves();    
+        possibleMoves();
+        addClickListener();    
 }
 
 function isPossibleMove(x){
@@ -378,11 +409,12 @@ function possibleMoves(){
             
         }
     }
-}possibleMoves();
+}
 
 function checkWinner(){
     bluesCount=0;
     redsCount=0;
+    let possibleMovesCount=0;
     for(let j=0;j<cells.length;j++){
         if(cells[j].className==BLUE_PIECE){
             bluesCount++;
@@ -390,18 +422,33 @@ function checkWinner(){
         if(cells[j].className==RED_PIECE){
             redsCount++;
         }
+        if(cells[j].className=="possible-move"){
+            possibleMovesCount++;
+        }
     }
-    if(noPiecesCount==0){
+    if(noPiecesCount==0 || possibleMovesCount==0){
         if(redsCount>bluesCount){
-            
+            $('#alert-success').show();
+            successAlert.innerHTML="Piros nyert";
+            delay(function(){
+                $('#alert-success').alert('close'); 
+            },3000);
             console.log("Red wins")
         }
         if(bluesCount>redsCount){
-           
+            $('#alert-success').show();
+            successAlert.innerHTML="Kék nyert";
+            delay(function(){
+                $('#alert-success').alert('close'); 
+            },3000);
             console.log("Blue wins")
         }
         if(redsCount==bluesCount){
-            
+            $('#alert-success').show();
+            successAlert.innerHTML="Döntetlen";
+            delay(function(){
+                $('#alert-success').alert('close'); 
+            },3000);
             console.log("Egyenlő")
         }
         
@@ -462,12 +509,13 @@ function switchColor(){
     
         for(i=1;i<=N-sorbanHanyadik;i++){
             if(cells[kivalasztott+i].className==NO_PIECE){
-                //console.log("break jobb")
+                break;
+            }
+            if(cells[kivalasztott+i].className=="disabled"){
                 break;
             }
             
             if(cells[kivalasztott+i].className!=currentPlayer && cells[kivalasztott+i].className!=NO_PIECE){
-                //console.log("utolso ellenfelnel"+(kivalasztott+i))
                 utolsoEllenfel=kivalasztott+i;
             }
             if(cells[kivalasztott+i].className==currentPlayer){
@@ -475,12 +523,11 @@ function switchColor(){
                 }
                 
              }
-            // console.log("Utolso sajat jobbra: "+utolsoSajat+"Utolso ellenfel jobbra: "+utolsoEllenfel);
             var e=parseInt(utolsoEllenfel);
             var s=parseInt(utolsoSajat);
             if(utolsoEllenfel!=null && utolsoSajat!=null){
             for(let j=kivalasztott;j<=s;j++){
-                cells[j].setAttribute("class",currentPlayer);
+                    cells[j].setAttribute("class",currentPlayer);
                 }
             }
             e=null;
@@ -494,11 +541,11 @@ function switchColor(){
     //balra néz
     
         for(i=1;i<sorbanHanyadik;i++){
-            //console.log(i)
-           // console.log(kivalasztott-i)
 
             if(cells[kivalasztott-i].className==NO_PIECE){
-                //console.log("break bal")
+                break;
+            }
+            if(cells[kivalasztott-i].className=="disabled"){
                 break;
             }
             
@@ -508,17 +555,14 @@ function switchColor(){
             if(cells[kivalasztott-i].className==currentPlayer){
                 utolsoSajat=kivalasztott-i;
                 }
-            
-            
             }
-            //console.log("Utolso sajat balra: "+utolsoSajat+"Utolso ellenfel balra: "+utolsoEllenfel);
             var e=parseInt(utolsoEllenfel);
             var s=parseInt(utolsoSajat);
 
             if(utolsoEllenfel!=null && utolsoSajat!=null){
-            for(let j=kivalasztott;j>=s;j--){
-                cells[j].setAttribute("class",currentPlayer);
-                    }
+                for(let j=kivalasztott;j>=s;j--){
+                        cells[j].setAttribute("class",currentPlayer);
+                    }       
                 }
                 e=null;
                 s=null;
@@ -531,9 +575,13 @@ function switchColor(){
         for(i=1;i<hanyadikSor;i++){
            
             if(cells[kivalasztott-(i*N)].className==NO_PIECE){
-                //console.log("break fel")
                 break;
             }
+
+            if(cells[kivalasztott-(i*N)].className=="disabled"){
+                break;
+            }
+            
             
             if(cells[kivalasztott-(i*N)].className!=currentPlayer && cells[kivalasztott-(i*N)].className!=NO_PIECE){
                 utolsoEllenfel=kivalasztott-(i*N);
@@ -544,14 +592,15 @@ function switchColor(){
             
             
             }
-           // console.log("Utolso sajat felfele: "+utolsoSajat+"Utolso ellenfel felfele: "+utolsoEllenfel)
 
             var e=parseInt(utolsoEllenfel);
             var s=parseInt(utolsoSajat);
 
             if(utolsoEllenfel!=null && utolsoSajat!=null){
             for(let j=kivalasztott;j>=s;j=j-N){
-                cells[j].setAttribute("class",currentPlayer);
+                
+                    cells[j].setAttribute("class",currentPlayer);
+                
                  }
              }
             e=null;
@@ -567,7 +616,9 @@ function switchColor(){
         for(i=1;i<=N-hanyadikSor;i++){
 
             if(cells[kivalasztott+(i*N)].className==NO_PIECE){
-                //console.log("break le");
+                break;
+            }
+            if(cells[kivalasztott+(i*N)].className=="disabled"){
                 break;
             }
             
@@ -580,13 +631,14 @@ function switchColor(){
             
             
             }
-            //console.log("Utolso sajat lefele: "+utolsoSajat+"Utolso ellenfel lefele: "+utolsoEllenfel)
 
             var e=parseInt(utolsoEllenfel);
             var s=parseInt(utolsoSajat);
             if(utolsoEllenfel!=null && utolsoSajat!=null){
                 for(let j=kivalasztott;j<=s;j=j+N){
-                    cells[j].setAttribute("class",currentPlayer);
+                    
+                        cells[j].setAttribute("class",currentPlayer);
+                    
                 }
             }
             e=null;
@@ -601,23 +653,20 @@ function switchColor(){
             }else{
                 meddig=hanyadikSor;
             }
-            /*
-            console.log("N-sorbanhanyadik");
-            console.log(N-sorbanHanyadik);
-            console.log("N-hanyadiksor");
-            console.log(N-hanyadikSor);*/
+            
 
 
         //jobbra fel
         for(let i=1;i<hanyadikSor;i++){
-            //console.log(i)
             if(hanyadikSor==1 || sorbanHanyadik==1){
                 break;
             }
             
             if(cells[(kivalasztott+i)-(i*N)].className=="noPieceHere"){
-                //console.log("break jobbra fel")
-                
+                break;
+            }
+
+            if(cells[(kivalasztott+i)-(i*N)].className=="disabled"){
                 break;
             }
             
@@ -630,14 +679,15 @@ function switchColor(){
                 }
                 
              }
-             //console.log("Utolso sajat jobbra fel: "+utolsoSajat+"Utolso ellenfel jobbra fel: "+utolsoEllenfel);
             
              var e=parseInt(utolsoEllenfel);
             var s=parseInt(utolsoSajat);
             
             if(utolsoEllenfel!=null && utolsoSajat!=null){
             for(let j=kivalasztott;j>=s;j-=(N-1)){
-                cells[j].setAttribute("class",currentPlayer);
+                
+                    cells[j].setAttribute("class",currentPlayer);
+                
                 }
             
             }
@@ -650,7 +700,6 @@ function switchColor(){
             //jobbra le
             
             for(i=1;i<=N-sorbanHanyadik;i++){
-                //console.log((kivalasztott+i)+(i*N));
                 
                 if(hanyadikSor==N || sorbanHanyadik==N ){
                     break;
@@ -658,7 +707,10 @@ function switchColor(){
 
                 
                 if(cells[(kivalasztott+i)+(i*N)].className==NO_PIECE){
-                    //console.log("break jobbra le")
+                    break;
+                }
+
+                if(cells[(kivalasztott+i)+(i*N)].className=="disabled"){
                     break;
                 }
                 
@@ -673,13 +725,15 @@ function switchColor(){
                     break;
                 }
                  }
-                 //console.log("Utolso sajat jobbra le: "+utolsoSajat+"Utolso ellenfel jobbra le: "+utolsoEllenfel);
+                 
                 var e=parseInt(utolsoEllenfel);
                 var s=parseInt(utolsoSajat);
                 
                 if(utolsoEllenfel!=null && utolsoSajat!=null){
                 for(let j=kivalasztott;j<=s;j+=(N+1)){
-                    cells[j].setAttribute("class",currentPlayer);
+                    
+                        cells[j].setAttribute("class",currentPlayer);
+                    
                     }
                 }
                 e=null;
@@ -692,15 +746,15 @@ function switchColor(){
         
     
         for(i=1;i<meddig;i++){
-            //console.log(i);
-            //console.log((kivalasztott-i)-(i*N));
-            //console.log("meddig: "+meddig);
            if(sorbanHanyadik==1 || hanyadikSor==1 ){
                break;
            }
+           
             
             if(cells[(kivalasztott-i)-(i*N)].className==NO_PIECE){
-                //console.log("break balra fel")
+                break;
+            }
+            if(cells[(kivalasztott-i)-(i*N)].className=="disabled"){
                 break;
             }
             
@@ -715,14 +769,12 @@ function switchColor(){
             }
             
             }
-          // console.log("Utolso sajat balra fel: "+utolsoSajat+"Utolso ellenfel balra fel: "+utolsoEllenfel);
             var e=parseInt(utolsoEllenfel);
             var s=parseInt(utolsoSajat);
 
             if(utolsoEllenfel!=null && utolsoSajat!=null){
                 for(let j=kivalasztott;j>=s;j-=(N+1)){
-                    //console.log(j)
-                    cells[j].setAttribute("class",currentPlayer);
+                        cells[j].setAttribute("class",currentPlayer);
                     }
                 
                 e=null;
@@ -740,9 +792,12 @@ function switchColor(){
             }
              
              if(cells[(kivalasztott-i)+(i*N)].className==NO_PIECE){
-                 //console.log("break balra le")
                  break;
              }
+
+             if(cells[(kivalasztott-i)+(i*N)].className=="disabled"){
+                break;
+            }
              
              if(cells[(kivalasztott-i)+(i*N)].className!=currentPlayer && cells[(kivalasztott-i)+(i*N)].className!=NO_PIECE){
                  utolsoEllenfel=(kivalasztott-i)+(i*N);
@@ -762,7 +817,7 @@ function switchColor(){
              var s=parseInt(utolsoSajat);
              if(utolsoEllenfel!=null && utolsoSajat!=null){
                  for(let j=kivalasztott;j<=s;j+=(N-1)){
-                     cells[j].setAttribute("class",currentPlayer);
+                        cells[j].setAttribute("class",currentPlayer);
                      }
                  
                  e=null;

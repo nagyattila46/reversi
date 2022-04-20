@@ -1,11 +1,7 @@
 package com.example.reversitwo.dto;
 
-import com.example.reversitwo.entity.Board;
 import com.example.reversitwo.entity.Player;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.util.Locale;
 
 public class BoardDTO {
 

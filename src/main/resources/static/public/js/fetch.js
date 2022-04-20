@@ -29,13 +29,11 @@ const sendHttpRequest=(method,url,data)=>{
 
 const getData=()=>{
     sendHttpRequest('GET','http://localhost:8080/board').then(responseData=>{
-        console.log(responseData);
         return responseData;
     })
 }
 
 const sendData=()=>{
-    $('#alert-saved').show();
     let cellsNumbers=[];
     let data=[];
     for(let i=0;i<8;i++){
@@ -46,6 +44,8 @@ const sendData=()=>{
                 data.push(2);
             }else if(cells[(i*8)+j].className==NO_PIECE || cells[(i*8)+j].className=="possible-move"){
                 data.push(0);
+            }else if(cells[(i*8)+j].className=="disabled"){
+                data.push(3);
             } 
         }
         cellsNumbers.push(data);
@@ -58,21 +58,18 @@ const sendData=()=>{
         szabadMezokSzama:noPiecesCount,    
         egyesekSzama:bluesCount,
         kettesekSzama:redsCount,
-        
         n:8,
         turn:turn
         }
     ).then(responseData=>{
         console.log(responseData)
         saveID=responseData.id;
-        $('#alert-saved').show();
+        $('#alert-success').show();
         successAlert.innerHTML="Tábla mentve,ID:"+saveID;
         delay(function(){
-            $('#alert-saved').alert('close'); 
+            $('#alert-success').alert('close'); 
         },3000);
         
-        
-       
         
     }).catch(function(error){
         console.log("Hiba:"+error);

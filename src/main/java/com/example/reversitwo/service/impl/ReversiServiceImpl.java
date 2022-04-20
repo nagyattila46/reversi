@@ -1,8 +1,8 @@
 package com.example.reversitwo.service.impl;
 
+
 import com.example.reversitwo.dto.BoardDTO;
 import com.example.reversitwo.entity.Board;
-import com.example.reversitwo.entity.Player;
 import com.example.reversitwo.repository.GameRepository;
 import com.example.reversitwo.service.ReversiService;
 import org.modelmapper.ModelMapper;
@@ -26,6 +26,7 @@ public class ReversiServiceImpl implements ReversiService {
 
     }
 
+
     @Override
     public BoardDTO createGame(BoardDTO boardDTO) {
         Board boardToSave=modelMapper.map(boardDTO,Board.class);
@@ -33,33 +34,6 @@ public class ReversiServiceImpl implements ReversiService {
         Board savedBoard=gameRepository.save(boardToSave);
         return modelMapper.map(savedBoard, BoardDTO.class);
     }
-
-    @Override
-    public Board gameplay() {
-        return null;
-    }
-
-
-    @Override
-    public Board makeMove(Board b,Player p,int i,int j) {
-        b.setMezo(b,p,i,j);
-        return b;
-    }
-
-    @Override
-    public BoardDTO makeMove(BoardDTO b, Player p, int i, int j) {
-        b.setMezo(b,p,i,j);
-        return b;
-    }
-
-    @Override
-    public Player checkWinner(Board b) {
-        if(b.getEgyesekSzama()>b.getKettesekSzama())return Player.RED;
-        if(b.getEgyesekSzama()<b.getKettesekSzama())return Player.BLUE;
-        else return null;
-    }
-
-
 
     @Override
     public Optional<BoardDTO> findByID(Long ID) {
@@ -72,4 +46,6 @@ public class ReversiServiceImpl implements ReversiService {
         List<Board> optionalBoard=gameRepository.findAll();
         return optionalBoard;
     }
+
+
 }

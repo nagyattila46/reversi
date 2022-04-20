@@ -143,6 +143,7 @@ td {
     z-index: 2;
 }
 
+
 p {
     display: inline-block;
 }
@@ -158,8 +159,10 @@ span {
 }
 
 .alert{
-    position: relative;
-    z-index: 10;
+    position: fixed;
+    z-index: 12;
+    width: 300px;
+    height: 50px;
 }
 .menu{
     position: relative;
@@ -241,6 +244,12 @@ pre {
     margin-left: 30em;
     
     
+}
+.disabled{
+    background-color: black;
+    width: 20px;
+    height: 20px;
+    padding: 12px;
 }
 
 
