@@ -61,8 +61,8 @@ function startGame(){
         
         cells[i].removeEventListener("click",chooseDisabledTiles)
     }
-    addClickListener();
     possibleMoves();
+    addClickListener();
     
 }
 startGameButton.addEventListener("click",startGame)
@@ -428,27 +428,30 @@ function checkWinner(){
     }
     if(noPiecesCount==0 || possibleMovesCount==0){
         if(redsCount>bluesCount){
+            /*
             $('#alert-success').show();
             successAlert.innerHTML="Piros nyert";
             delay(function(){
                 $('#alert-success').alert('close'); 
-            },3000);
+            },3000);*/
             console.log("Red wins")
         }
         if(bluesCount>redsCount){
+            /*
             $('#alert-success').show();
             successAlert.innerHTML="Kék nyert";
             delay(function(){
                 $('#alert-success').alert('close'); 
-            },3000);
+            },3000);*/
             console.log("Blue wins")
         }
         if(redsCount==bluesCount){
+            /*
             $('#alert-success').show();
             successAlert.innerHTML="Döntetlen";
             delay(function(){
                 $('#alert-success').alert('close'); 
-            },3000);
+            },3000);*/
             console.log("Egyenlő")
         }
         
