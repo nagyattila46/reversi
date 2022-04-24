@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/rest")
 public class ReversiController {
 
-    private ReversiService reversiService;
+    private final ReversiService reversiService;
 
     public ReversiController(ReversiService reversiService){this.reversiService=reversiService;}
 

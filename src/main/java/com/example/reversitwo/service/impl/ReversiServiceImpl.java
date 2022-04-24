@@ -17,7 +17,7 @@ public class ReversiServiceImpl implements ReversiService {
 
 
     private final GameRepository gameRepository;
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
 
     public ReversiServiceImpl(GameRepository gameRepository,ModelMapper modelMapper){

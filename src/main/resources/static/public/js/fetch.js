@@ -1,4 +1,4 @@
-let successAlert=document.getElementById("alert-saved");
+let successAlert=document.getElementById("alert-success");
 
 var delay = ( function() {
     var timer = 0;
