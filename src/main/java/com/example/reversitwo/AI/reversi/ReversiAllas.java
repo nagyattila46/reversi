@@ -39,8 +39,16 @@ public class ReversiAllas extends Position{
 //       }
 //       return szabadMezokSzama;
 //    }
-    
-    
+
+
+    public int getN() {
+        return N;
+    }
+
+    public int[][] getÁllás() {
+        return állás;
+    }
+
     public void setN(int N) {
         this.N = N;
     }

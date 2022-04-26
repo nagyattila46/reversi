@@ -10,7 +10,7 @@ import java.util.Vector;
 
 public abstract class GameSearch {
 
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
     public static float INFINITY = 1000000.0f;
     /*
      * Note: the abstract Position also needs to be
@@ -100,12 +100,24 @@ public abstract class GameSearch {
         }
         return v3;
     }
+
+    public ReversiAllas playGame(Position position){
+
+        Vector v = alphaBeta(0, position, PROGRAM);
+        position = (Position)v.elementAt(1);
+        ReversiAllas reversiAllas=(ReversiAllas) position;
+        return reversiAllas;
+
+    }
+
     public void playGame(Position startingPosition, boolean humanPlayFirst) {
         if (humanPlayFirst == false) {
             Vector v = alphaBeta(0, startingPosition, PROGRAM);
             startingPosition = (Position)v.elementAt(1);
+
+
         }
-        while (true) {
+        /*while (true) {
             printPosition(startingPosition);
             if (wonPosition(startingPosition, PROGRAM)) {
                 System.out.println("Program won");
@@ -129,6 +141,7 @@ public abstract class GameSearch {
                 System.out.println(" next element: " + enum2.nextElement());
             }
             startingPosition = (Position)v.elementAt(1);
-        }
+        }*/
+
     }
 }

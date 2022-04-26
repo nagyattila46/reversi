@@ -1,5 +1,6 @@
 let successAlert=document.getElementById("alert-success");
 
+
 var delay = ( function() {
     var timer = 0;
     return function(callback, ms) {
@@ -76,3 +77,9 @@ const sendData=()=>{
     })
     
 }
+
+
+
+
+
+

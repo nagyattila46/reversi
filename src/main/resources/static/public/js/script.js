@@ -6,15 +6,18 @@ const blueTurntext = document.getElementById("kekSzoveg");
 const divider = document.querySelector("#divider")
 let blueScore=document.getElementById("blueScore");
 let redScore=document.getElementById("redScore");
-let noPiecesCount=60
-let redsCount=2;
-let bluesCount=2;
-let turn=true  //igaz-kék hamis-piros
+var noPiecesCount=60
+var redsCount=2;
+var bluesCount=2;
+var turn=true  //igaz-kék hamis-piros
 let N=8;
 var BLUE_PIECE="blue-piece";
 var RED_PIECE="red-piece";
 var NO_PIECE="noPieceHere";
-var selectedPiece=-1
+var selectedPiece=1;
+var proba=23232323;
+
+
 let startGameButton=document.getElementById("button-startgame");
 /*
 blueScore.innerHTML=bluesCount;
@@ -87,40 +90,132 @@ function setFrontendGraphics(){
 }
 
 
+function getAIMove(){
+    var y=0;
+    let cellsNumbers=[];
+    let data=[];
+    for(let i=0;i<8;i++){
+        for(let j=0;j<8;j++){
+            if(cells[(i*8)+j].className==BLUE_PIECE){
+                data.push(1);
+            }else if(cells[(i*8)+j].className==RED_PIECE){
+                data.push(2);
+            }else if(cells[(i*8)+j].className==NO_PIECE || cells[(i*8)+j].className=="possible-move"){
+                data.push(0);
+            }else if(cells[(i*8)+j].className=="disabled"){
+                data.push(3);
+            } 
+        }
+        cellsNumbers.push(data);
+        data=[];
+    }
+    
+
+    sendHttpRequest('POST','http://localhost:8080/rest/getaimove',{
+        palya:cellsNumbers,
+        szabadMezokSzama:noPiecesCount,    
+        egyesekSzama:bluesCount,
+        kettesekSzama:redsCount,
+        n:8,
+        turn:turn
+        }
+    ).then(responseData=>{
+        
+
+        for(let i=0;i<N;i++){
+            for(let j=0;j<N;j++){
+                //console.log(cells[i*N+j].className)
+                
+            }
+        }
+        for(i=0;i<N;i++){
+            for(j=0;j<N;j++){
+                if(responseData.palya[i][j]==2 && cellsNumbers[i][j]==0){
+                    y=(i*8)+j;
+                    console.log("aimoveban a selectedpiece lenne:")
+                    console.log(y);
+                    selectedPiece=y;
+                    
+                   
+                    
+                    
+                }
+                
+            }
+        }
+        console.log("switch")
+        
+        
+        for(let i=0;i<N;i++){
+            for(let j=0;j<N;j++){
+                if(responseData.palya[i][j]==1){
+                    cells[i*N+j].setAttribute("class","blue-piece");
+                }
+                if(responseData.palya[i][j]==2){
+                    cells[i*N+j].setAttribute("class","red-piece");
+                }
+                if(responseData.palya[i][j]==0){
+                    cells[i*N+j].setAttribute("class","noPieceHere");
+                }
+            }
+            
+        }
+        
+        switchColor();
+        turn=!turn;
+        possibleMoves();
+        addClickListener();
+        
+        
+        
+        
+    }).catch(function(error){
+        console.log("Hiba a lépés meghatározásában:"+error);
+    })
+
+    
+    
+
+}
+
 function placeTile(){
     
-    
-        if(turn){
-
             this.setAttribute("class","blue-piece");
+          
             deletePossibleMoves();
             selectedPiece=this.id;
             cells[selectedPiece].removeEventListener("click",placeTile);
             noPiecesCount--;
             switchColor();
-            checkWinner();
+            //checkWinner();
             blueTurntext.setAttribute("class","no-turn-text");
             redTurnText.setAttribute("class","red-turn-text");
             
            
-        }
-        else{
+            console.log(selectedPiece);
+            turn=!turn;
+            getAIMove();
             
-            this.setAttribute("class","red-piece");
+            
+            /*
             deletePossibleMoves();
             selectedPiece=this.id;
             cells[selectedPiece].removeEventListener("click",placeTile);
             noPiecesCount--;
             switchColor();
-            checkWinner();
+            //checkWinner();
             redTurnText.setAttribute("class","no-turn-text");
             blueTurntext.setAttribute("class","blue-turn-text");
-
-        }
-        turn=!turn
-        possibleMoves();
-        addClickListener();    
+            */
+            
+            
+        
+            
 }
+
+
+
+
 
 function isPossibleMove(x){
     var currentPlayer;

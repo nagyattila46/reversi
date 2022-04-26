@@ -1,6 +1,8 @@
 package com.example.reversitwo.controller;
 
 
+import com.example.reversitwo.AI.reversi.Reversi;
+import com.example.reversitwo.AI.reversi.ReversiAllas;
 import com.example.reversitwo.dto.BoardDTO;
 import com.example.reversitwo.entity.Board;
 import com.example.reversitwo.entity.Player;
@@ -63,6 +65,32 @@ public class ReversiController {
         }
         return response;
     }
+
+    @RequestMapping(path="/getaimove",method = RequestMethod.POST)
+    public ResponseEntity<BoardDTO>aimove(@RequestBody BoardDTO boardDTO){
+        Reversi reversi=new Reversi();
+        ReversiAllas allas=new ReversiAllas();
+        allas.setMatrix(boardDTO.getPalya());
+        allas.setN(boardDTO.getN());
+        allas.setEgyesekSzama(boardDTO.getEgyesekSzama());
+        allas.setKettesekSzama(boardDTO.getKettesekSzama());
+
+        allas=reversi.playGame(allas);
+
+
+
+        boardDTO.setPalya(allas.getÁllás());
+        boardDTO.setN(allas.getN());
+        boardDTO.setEgyesekSzama(allas.getEgyesekSzama());
+        boardDTO.setKettesekSzama(allas.getKettesekSzama());
+
+
+        ResponseEntity<BoardDTO>response;
+        response=ResponseEntity.status(HttpStatus.OK).body(boardDTO);
+        return response;
+    }
+
+
 
 
 

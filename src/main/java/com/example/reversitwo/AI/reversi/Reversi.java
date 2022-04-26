@@ -79,12 +79,12 @@ public class Reversi extends GameSearch{
 
         int sajat=0, ellenfel=0;
         if(player){
-            sajat=2;
-            ellenfel=1;
-
-        }else{
             sajat=1;
             ellenfel=2;
+
+        }else{
+            sajat=2;
+            ellenfel=1;
 
         }
 
@@ -105,7 +105,7 @@ public class Reversi extends GameSearch{
                         a.setN(pos.N);
                         a.setMatrix(pos.állás);
                         //makeMove(a, player,new ReversiLepes(i,j));
-                            a.állás[i][j]=1;
+                            a.állás[i][j]=sajat;
                         possible.add(a);
 
                         }
@@ -125,7 +125,7 @@ public class Reversi extends GameSearch{
                                     a.setN(pos.N);
                                     a.setMatrix(pos.állás);
                                     //makeMove(a, player,new ReversiLepes(i,j));
-                                    a.állás[i][j]=1;
+                                    a.állás[i][j]=sajat;
                                     possible.add(a);
 
                                 }
@@ -145,7 +145,7 @@ public class Reversi extends GameSearch{
                                     a.setN(pos.N);
                                     a.setMatrix(pos.állás);
                                     //makeMove(a, player,new ReversiLepes(i,j));
-                                    a.állás[i][j]=1;
+                                    a.állás[i][j]=sajat;
                                     possible.add(a);
 
                                 }
@@ -166,7 +166,7 @@ public class Reversi extends GameSearch{
                                     a.setN(pos.N);
                                     a.setMatrix(pos.állás);
                                     //makeMove(a, player,new ReversiLepes(i,j));
-                                    a.állás[i][j]=1;
+                                    a.állás[i][j]=sajat;
                                     possible.add(a);
 
                                 }
@@ -192,7 +192,7 @@ public class Reversi extends GameSearch{
                                         a.setN(pos.N);
                                         a.setMatrix(pos.állás);
                                         //makeMove(a, player,new ReversiLepes(i,j));
-                                        a.állás[i][j]=1;
+                                        a.állás[i][j]=sajat;
                                         possible.add(a);
 
                                     }
@@ -221,7 +221,7 @@ public class Reversi extends GameSearch{
                                     a.setN(pos.N);
                                     a.setMatrix(pos.állás);
                                     //makeMove(a, player,new ReversiLepes(i,j));
-                                    a.állás[i][j]=1;
+                                    a.állás[i][j]=sajat;
                                     possible.add(a);
 
                                 }
@@ -247,7 +247,7 @@ public class Reversi extends GameSearch{
                                         a.setN(pos.N);
                                         a.setMatrix(pos.állás);
                                         //makeMove(a, player,new ReversiLepes(i,j));
-                                        a.állás[i][j]=1;
+                                        a.állás[i][j]=sajat;
                                         possible.add(a);
 
                                     }
@@ -276,7 +276,7 @@ public class Reversi extends GameSearch{
                                         a.setN(pos.N);
                                         a.setMatrix(pos.állás);
                                         //makeMove(a, player,new ReversiLepes(i,j));
-                                        a.állás[i][j]=1;
+                                        a.állás[i][j]=sajat;
                                         possible.add(a);
 
                                     }
@@ -313,12 +313,12 @@ public class Reversi extends GameSearch{
         int aktualis=0;
         int ellenfel=0;
         if(player==true){
-            aktualis=2;
-            ellenfel=1;
+            aktualis=1;
+            ellenfel=2;
         }
         if(player==false){
-            aktualis=1;
-            ellenfel =2;
+            aktualis=2;
+            ellenfel =1;
         }
 
         ReversiAllas pos2=new ReversiAllas();
@@ -376,7 +376,9 @@ public class Reversi extends GameSearch{
     public static void main(String[] args) {
         ReversiAllas a=new ReversiAllas();
         Reversi r=new Reversi();
-        r.playGame(a,false);
+        System.out.println("printposition p:");
+        a=r.playGame(a);
+        r.printPosition(a);
     }
 
     
